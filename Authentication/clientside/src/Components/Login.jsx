@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import email_icon from "../Assets/email.png";
 import password_icon from "../Assets/password.png";
 import "./Login.css";
+import axios from "axios";
 
 const Login = () => {
 	const [input, setInput] = useState({
@@ -13,17 +14,23 @@ const Login = () => {
 	const fun1 = (e) => {
 		let { name, value } = e.target;
 		setInput({ ...input, [name]: value });
-		console.log(input);
+		// console.log(input);
 	};
 
-	fetch('http://localhost:4000/login')
-	.then(function (response) {
-		return response.json();
-	});
+	// fetch('http://localhost:4000/login')
+	// .then(function (response) {
+	// 	return response.json();
+	// });
+
+	const handleLogin = async (e)=>{
+		e.preventDefault();
+		const response = await axios.post("http://localhost:4000/login", input);     
+        console.log(response.data);
+	}
 
 	return (
 		<div className="parent1">
-			<form action="/login" method="post">
+			<form onSubmit={handleLogin}>
 				<div className="container2">
 					<header className="header1">
 						<span className="text1">Login form</span>
